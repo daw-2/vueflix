@@ -1,4 +1,5 @@
 <script setup>
+import Button from './Button.vue'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
@@ -24,13 +25,7 @@ const logged = ref(false)
               />
               <button @click="logged = false">X</button>
             </template>
-            <button
-              class="bg-red-700 py-2 px-4 rounded text-sm hover:bg-red-800 duration-200 ml-6"
-              v-else
-              @click="logged = true"
-            >
-              Connexion
-            </button>
+            <Button v-else @click="logged = true">Connexion</Button>
           </div>
         </nav>
       </div>

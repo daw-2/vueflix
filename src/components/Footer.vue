@@ -10,7 +10,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <footer class="max-w-7xl mx-auto px-3 py-4">
+  <footer class="max-w-7xl mx-auto px-3 py-4 border-t">
     <p class="text-center">
       Copyright &copy; {{ new Date().getFullYear() }}. Catalogue de
       <strong>{{ totalMovies }}</strong> films.
