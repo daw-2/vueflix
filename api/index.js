@@ -1,6 +1,7 @@
 const jsonServer = require('json-server')
 const app = jsonServer.create()
 const router = jsonServer.router('db.json')
+const middlewares = jsonServer.defaults()
 const auth = require('json-server-auth')
 
 router.db._.mixin({
@@ -27,7 +28,7 @@ router.db._.mixin({
   }
 })
 
-app.use(auth).use(router)
+app.use(middlewares).use(auth).use(router)
 app.listen(3000, () => {
   console.log('Serveur démarré (http://localhost:3000/) !')
 })

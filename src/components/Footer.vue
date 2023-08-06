@@ -1,7 +1,12 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { movies } from '../api'
 
 const totalMovies = ref(Math.floor(Math.random() * 35000))
+
+onMounted(async () => {
+  totalMovies.value = (await movies()).length
+})
 </script>
 
 <template>
