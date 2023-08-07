@@ -23,8 +23,8 @@ onMounted(async () => (movies.value = await getMovies()))
   <div class="max-w-7xl mx-auto px-3 py-4">
     <h1 class="text-4xl text-center font-bold my-12">Films</h1>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
-      <div v-for="movie in movies" :key="movie.id" class="bg-white rounded-lg shadow">
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+      <div v-for="movie in movies" :key="movie.id" class="bg-white rounded-lg shadow flex flex-col">
         <div class="relative">
           <RouterLink :to="`/films/${movie.id}-${slug(movie.title)}`">
             <img
@@ -46,7 +46,7 @@ onMounted(async () => (movies.value = await getMovies()))
             >
           </div>
         </div>
-        <div class="p-3">
+        <div class="p-3 flex flex-col justify-between flex-grow">
           <h2 class="font-bold">
             <RouterLink :to="`/films/${movie.id}-${slug(movie.title)}`">{{
               movie.title

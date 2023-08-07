@@ -70,12 +70,12 @@ onMounted(async () => {
   <div class="bg-cover bg-center" :style="{ backgroundImage: `url(${movie.backdrop_path})` }">
     <div class="py-6" :style="{ backgroundColor: `rgba(${color}, 0.75)` }">
       <div class="max-w-7xl mx-auto px-3 py-4">
-        <div class="flex gap-8">
-          <div class="min-w-fit">
+        <div class="md:flex gap-8">
+          <div class="min-w-fit mb-8 md:mb-0">
             <img
               :src="movie.poster_path"
               :alt="movie.title"
-              class="rounded-lg h-[400px] object-cover"
+              class="rounded-lg h-[400px] object-cover mx-auto"
             />
           </div>
           <div class="text-white flex flex-col justify-center">
@@ -139,7 +139,7 @@ onMounted(async () => {
   <div class="max-w-7xl mx-auto px-3 py-4">
     <h2 class="text-2xl font-bold my-4">Casting</h2>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
       <div
         v-for="actor in movie?.actors
           ?.filter((actor) => actor.profile_path)
@@ -163,7 +163,7 @@ onMounted(async () => {
   <div class="max-w-7xl mx-auto px-3 py-4">
     <h2 class="text-2xl font-bold my-4">Commentaires ({{ comments.length }})</h2>
 
-    <div class="w-6/12 mx-auto mb-6">
+    <div class="md:w-6/12 mx-auto mb-6">
       <h2 class="text-lg font-bold my-4">Ajouter un commentaire</h2>
       <form>
         <div>

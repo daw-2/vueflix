@@ -40,7 +40,7 @@ const emit = defineEmits(['close'])
 }
 
 .modal-container {
-  width: 50%;
+  width: 100%;
   max-width: 80rem;
   margin: auto;
   padding: 20px 30px;
