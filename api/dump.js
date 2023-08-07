@@ -10,10 +10,7 @@ const baseUrl = 'https://api.themoviedb.org/3'
 const getGenres = async () => {
   const { genres } = await $fetch(`${baseUrl}/genre/movie/list?api_key=${process.env.MOVIE_DB_API_KEY}&language=fr-FR`)
 
-  return genres.map(genre => ({
-    ...genre,
-    // slug: slugify(genre.name, { lower: true }),
-  }))
+  return genres.map(genre => ({ ...genre }))
 }
 
 const getMoviesOrActors = async (pages = 2) => {
@@ -26,7 +23,7 @@ const getMoviesOrActors = async (pages = 2) => {
     movies = movies.concat(await Promise.all(results.map(async (movie) => {
       const result = await $fetch(`${baseUrl}/movie/${movie.id}?api_key=${process.env.MOVIE_DB_API_KEY}&language=fr-FR&append_to_response=videos,credits`)
       const { genres, videos } = result
-      const actorsMovie = result.credits.cast.slice(0, 5) // [{}, {}]
+      const actorsMovie = result.credits.cast.slice(0, 5)
 
       actorsMovie.forEach(async (actor) => {
         let existing = actors.find(a => a.id === actor.id)
@@ -40,7 +37,6 @@ const getMoviesOrActors = async (pages = 2) => {
             ...actor,
             ...(delete result.also_known_as && result),
             profile_path: result.profile_path ? `https://image.tmdb.org/t/p/w500${result.profile_path}` : null,
-            // slug: slugify(result.name, { lower: true }),
             moviesId: [movie.id]
           })
         }
@@ -51,7 +47,6 @@ const getMoviesOrActors = async (pages = 2) => {
           && delete result.belongs_to_collection && delete result.production_companies && delete result.production_countries && result),
         backdrop_path: `https://image.tmdb.org/t/p/original${result.backdrop_path}`,
         poster_path: `https://image.tmdb.org/t/p/w500${result.poster_path}`,
-        // slug: slugify(result.title, { lower: true }),
         youtube: videos.results[0]?.key,
         genreId: genres[0].id,
         actorsId: actorsMovie.map(actor => actor.id),
