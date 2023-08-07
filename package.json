@@ -10,8 +10,10 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "colorthief": "^2.4.0",
     "ofetch": "^1.1.1",
     "pinia": "^2.1.4",
+    "slugify": "^1.6.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },

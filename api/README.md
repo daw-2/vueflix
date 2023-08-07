@@ -19,5 +19,6 @@ J'utilise la base de [Json Server](https://github.com/typicode/json-server), sur
 Voici les URLs de l'API :
 
 - http://localhost:3000/movies => Tous les films
-- http://localhost:3000/genres => Toutes les catégories
-- http://localhost:3000/actors => Tous les acteurs
+- http://localhost:3000/movies?_expand=genre&_expand=actors => Tous les films avec leur catégorie et leurs acteurs
+- http://localhost:3000/movies/346698 => Un film
+- http://localhost:3000/movies/614479?_expand=genre&_expand=actors => Un film avec sa catégorie et ses acteurs

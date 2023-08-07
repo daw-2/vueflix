@@ -11,7 +11,7 @@ const getGenres = async () => {
 
   return genres.map(genre => ({
     ...genre,
-    slug: slugify(genre.name, { lower: true }),
+    // slug: slugify(genre.name, { lower: true }),
   }))
 }
 
@@ -36,7 +36,7 @@ const getMoviesOrActors = async (pages = 2) => {
           actors.push({
             ...actor,
             profile_path: `https://image.tmdb.org/t/p/w500${actor.profile_path}`,
-            slug: slugify(actor.name, { lower: true }),
+            // slug: slugify(actor.name, { lower: true }),
             moviesId: [movie.id]
           })
         }
@@ -47,10 +47,10 @@ const getMoviesOrActors = async (pages = 2) => {
           && delete result.belongs_to_collection && delete result.production_companies && delete result.production_countries && result),
         backdrop_path: `https://image.tmdb.org/t/p/original${result.backdrop_path}`,
         poster_path: `https://image.tmdb.org/t/p/w500${result.poster_path}`,
-        slug: slugify(result.title, { lower: true }),
+        // slug: slugify(result.title, { lower: true }),
         youtube: videos.results[0]?.key,
         genreId: genres[0].id,
-        actorId: actorsMovie.map(actor => actor.id),
+        actorsId: actorsMovie.map(actor => actor.id),
       }
     })))
   }
