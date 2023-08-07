@@ -1,5 +1,5 @@
 import { $fetch } from 'ofetch'
 
-export function movies() {
+export function getMovies() {
   return $fetch('http://localhost:3000/movies')
 }

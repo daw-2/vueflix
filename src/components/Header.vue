@@ -10,7 +10,9 @@ const logged = ref(false)
   <header class="bg-gray-700">
     <div class="max-w-7xl mx-auto px-3 py-4">
       <div class="flex justify-between items-center">
-        <h1 class="text-2xl text-white font-bold">Vue<span class="text-red-400">Flix</span></h1>
+        <h1 class="text-2xl text-white font-bold">
+          <RouterLink to="/" class="px-2">Vue<span class="text-red-400">Flix</span></RouterLink>
+        </h1>
         <nav class="text-white flex items-center">
           <RouterLink to="/" class="px-2">Accueil</RouterLink>
           <RouterLink to="/films" class="px-2">Films</RouterLink>

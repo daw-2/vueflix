@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps(['loading'])
+defineProps(['loading'])
 </script>
 
 <template>
