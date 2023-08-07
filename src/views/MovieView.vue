@@ -1,12 +1,14 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { getMovie } from '../api'
+import Modal from '../components/Modal.vue'
 import { computed, onMounted, ref } from 'vue'
 import ColorThief from 'colorthief'
 
 const route = useRoute()
 const movie = ref({})
 const color = ref([0, 0, 0])
+const showModal = ref(false)
 
 const year = computed(() => (date) => new Date(date).getFullYear())
 const age = computed(
@@ -74,7 +76,7 @@ onMounted(async () => {
                   >{{ note(movie.vote_average) }}%</span
                 >
               </div>
-              <button class="flex items-center gap-3">
+              <button class="flex items-center gap-3" @click="showModal = true">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -132,4 +134,18 @@ onMounted(async () => {
       </div>
     </div>
   </div>
+
+  <Teleport to="body">
+    <Modal :show="showModal" @close="showModal = false">
+      <iframe
+        width="100%"
+        height="500"
+        :src="`https://www.youtube.com/embed/${movie.youtube}`"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+    </Modal>
+  </Teleport>
 </template>
