@@ -28,7 +28,14 @@ router.db._.mixin({
   }
 })
 
-app.use(middlewares).use(auth).use(router)
+app.use(middlewares).use(auth).use(jsonServer.bodyParser).use((req, res, next) => {
+  if (req.method === 'POST') {
+    req.body.createdAt = Date.now()
+  }
+
+  next()
+}).use(router)
+
 app.listen(3000, () => {
   console.log('Serveur démarré (http://localhost:3000/) !')
 })

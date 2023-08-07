@@ -58,15 +58,16 @@ const getMoviesOrActors = async (pages = 2) => {
 
 (async () => {
   const { movies, actors } = await getMoviesOrActors(2)
+  const now = Date.now() - 100000000
 
   const data = {
     genres: await getGenres(),
     movies,
     actors,
     comments: [
-      { id: 1, message: 'Super film', createdAt: Date.now(), movieId: 346698, userId: 3 },
-      { id: 2, message: 'Encore un super film', createdAt: Date.now() + 2567000, movieId: 346698, userId: 2 },
-      { id: 3, message: 'Et encore un super film', createdAt: Date.now() + 5164000, movieId: 346698, userId: 1 },
+      { id: 1, message: 'Super film', createdAt: now, movieId: 346698, userId: 3 },
+      { id: 2, message: 'Encore un super film', createdAt: now + 2567000, movieId: 346698, userId: 2 },
+      { id: 3, message: 'Et encore un super film', createdAt: now + 5164000, movieId: 346698, userId: 1 },
     ],
     users: [
       { id: 1, name: 'Fiorella', email: 'fiorella@boxydev.com', password: bcrypt.hashSync('password') },
