@@ -82,9 +82,9 @@ const store = useCartStore()
           class="px-3 gap-3 pb-4 flex md:hidden flex-col absolute z-10 top-full left-0 bg-gray-700 text-white w-full"
           v-if="opened"
         >
-          <RouterLink to="/" class="px-2">Accueil</RouterLink>
-          <RouterLink to="/films" class="px-2">Films</RouterLink>
-          <RouterLink to="/a-propos" class="px-2">A propos</RouterLink>
+          <RouterLink to="/" class="px-2" @click="opened = false">Accueil</RouterLink>
+          <RouterLink to="/films" class="px-2" @click="opened = false">Films</RouterLink>
+          <RouterLink to="/a-propos" class="px-2" @click="opened = false">A propos</RouterLink>
           <div class="flex items-center space-x-3 px-2">
             <template v-if="logged">
               <strong class="text-lg">Fiorella</strong>
