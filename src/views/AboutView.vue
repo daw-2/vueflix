@@ -44,21 +44,23 @@ const showBiography = (user) => {
 <template>
   <h1 class="text-4xl text-center font-bold my-12">A propos</h1>
 
-  <div class="grid grid-cols-3">
-    <div v-for="user in team" :key="user.id" class="bg-white mx-3 p-4 rounded-lg shadow">
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div v-for="user in team" :key="user.id" class="bg-white p-4 rounded-lg shadow">
       <div class="grid grid-cols-2 items-center">
         <div>
           <img :src="user.avatar" :alt="user.name" class="rounded-full mx-auto w-32" />
           <h2 class="font-bold text-xl text-center mt-2">{{ user.name }}</h2>
         </div>
         <div>
-          <p class="text-center font-bold mb-3">{{ user.job }}</p>
-          <Button
-            v-if="isOpen !== user.id"
-            :loading="opening === user.id"
-            @click="showBiography(user)"
-            >Voir biographie</Button
-          >
+          <div class="text-center">
+            <p class="font-bold mb-3">{{ user.job }}</p>
+            <Button
+              v-if="isOpen !== user.id"
+              :loading="opening === user.id"
+              @click="showBiography(user)"
+              >Voir biographie</Button
+            >
+          </div>
           <p v-if="isOpen === user.id" class="text-sm">{{ user.biography }}</p>
         </div>
       </div>

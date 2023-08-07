@@ -27,7 +27,7 @@ const logged = ref(false)
               />
               <button @click="logged = false">X</button>
             </template>
-            <Button v-else @click="logged = true">Connexion</Button>
+            <Button v-else @click="logged = true" class="ml-6">Connexion</Button>
           </div>
         </nav>
       </div>

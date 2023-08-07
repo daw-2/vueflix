@@ -10,10 +10,12 @@ onMounted(async () => {
 </script>
 
 <template>
-  <footer class="max-w-7xl mx-auto px-3 py-4 border-t">
-    <p class="text-center">
-      Copyright &copy; {{ new Date().getFullYear() }}. Catalogue de
-      <strong>{{ totalMovies }}</strong> films.
-    </p>
+  <footer class="mt-10">
+    <div class="max-w-7xl mx-auto px-3 py-12 border-t border-gray-300">
+      <p class="text-center">
+        Copyright &copy; {{ new Date().getFullYear() }}. Catalogue de
+        <strong>{{ totalMovies }}</strong> films.
+      </p>
+    </div>
   </footer>
 </template>
