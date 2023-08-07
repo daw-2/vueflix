@@ -1,6 +1,5 @@
 const fs = require('fs')
 const { $fetch } = require('ofetch')
-const slugify = require('slugify')
 const bcrypt = require('bcryptjs')
 const dotenv = require('dotenv')
 dotenv.config()
