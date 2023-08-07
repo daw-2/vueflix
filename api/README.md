@@ -5,8 +5,8 @@ Ceci est l'API de Vueflix basée sur les données de [TMDB](https://www.themovie
 ## Installation et lancement
 
 ```bash
-cp .env.example .env
 npm install
+cp .env.example .env
 node index.js
 ```
 
@@ -18,7 +18,13 @@ J'utilise la base de [Json Server](https://github.com/typicode/json-server), sur
 
 Voici les URLs de l'API :
 
-- http://localhost:3000/movies => Tous les films
-- http://localhost:3000/movies?_expand=genre&_expand=actors => Tous les films avec leur catégorie et leurs acteurs
-- http://localhost:3000/movies/346698 => Un film
-- http://localhost:3000/movies/614479?_expand=genre&_expand=actors => Un film avec sa catégorie et ses acteurs
+| URL                                                              | Fonctionnalité(s)                                                            |
+| ---------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| http://localhost:3000/movies                                     | Tous les films                                                               |
+| http://localhost:3000/movies?_expand=genre&_expand=actors        | Tous les films avec leur catégorie et leurs acteurs                          |
+| http://localhost:3000/movies/346698                              | Un film                                                                      |
+| http://localhost:3000/movies/346698?_expand=genre&_expand=actors | Un film avec sa catégorie et ses acteurs                                     |
+| http://localhost:3000/genres/28                                  | Une catégorie                                                                |
+| http://localhost:3000/genres/28?_embed=movies                    | Une catégorie et ses films                                                   |
+| http://localhost:3000/movies/346698/comments?_expand=user        | Les commentaires d'un film et le créateur                                    |
+| http://localhost:3000/movies/346698/comments (en POST)           | Créer un commentaire sur un film (Il faut un message et un ID d'utilisateur) |

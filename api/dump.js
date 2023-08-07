@@ -1,6 +1,7 @@
 const fs = require('fs')
 const { $fetch } = require('ofetch')
 const slugify = require('slugify')
+const bcrypt = require('bcryptjs')
 const dotenv = require('dotenv')
 dotenv.config()
 
@@ -68,7 +69,16 @@ const getMoviesOrActors = async (pages = 2) => {
     genres: await getGenres(),
     movies,
     actors,
-    users: [],
+    comments: [
+      { id: 1, message: 'Super film', createdAt: Date.now(), movieId: 346698, userId: 3 },
+      { id: 2, message: 'Encore un super film', createdAt: Date.now() + 2567000, movieId: 346698, userId: 2 },
+      { id: 3, message: 'Et encore un super film', createdAt: Date.now() + 5164000, movieId: 346698, userId: 1 },
+    ],
+    users: [
+      { id: 1, name: 'Fiorella', email: 'fiorella@boxydev.com', password: bcrypt.hashSync('password') },
+      { id: 2, name: 'Matthieu', email: 'matthieu@boxydev.com', password: bcrypt.hashSync('password') },
+      { id: 3, name: 'Marina', email: 'marina@boxydev.com', password: bcrypt.hashSync('password') },
+    ],
   }
 
   fs.writeFileSync('db.json', JSON.stringify(data))

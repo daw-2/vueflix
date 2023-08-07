@@ -1,12 +1,13 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { getMovie } from '../api'
+import { getMovie, getComments } from '../api'
 import Modal from '../components/Modal.vue'
 import { computed, onMounted, ref } from 'vue'
 import ColorThief from 'colorthief'
 
 const route = useRoute()
 const movie = ref({})
+const comments = ref([])
 const color = ref([0, 0, 0])
 const showModal = ref(false)
 
@@ -26,6 +27,17 @@ const loadColor = () => {
 
 const formatDate = computed(() => (date) => new Date(date).toLocaleDateString('fr'))
 
+const formatDateComment = computed(
+  () => (date) =>
+    new Date(date).toLocaleString('fr', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric'
+    })
+)
+
 const duration = computed(() => (runtime) => {
   const hours = Math.floor(runtime / 60)
   const minutes = runtime % 60
@@ -36,6 +48,7 @@ const note = computed(() => (note) => Math.ceil((note * 100) / 10))
 
 onMounted(async () => {
   movie.value = await getMovie(route.params.id)
+  comments.value = await getComments(movie.value.id)
 
   loadColor()
 })
@@ -130,6 +143,32 @@ onMounted(async () => {
         <div class="p-3">
           <h2 class="font-bold">{{ actor.name }} ({{ age(actor.birthday) }} ans)</h2>
           <p class="text-gray-400">{{ actor.character }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-3 py-4">
+    <h2 class="text-2xl font-bold my-4">Commentaires ({{ comments.length }})</h2>
+
+    <div class="bg-white rounded-lg shadow divide-y">
+      <div
+        v-for="comment in comments.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))"
+        :key="comment.id"
+      >
+        <div class="p-3">
+          <div class="flex items-center gap-3 mb-3">
+            <img
+              class="w-10 rounded-full"
+              :src="`https://i.pravatar.cc/50?u=${comment.user.email}`"
+              :alt="comment.user.name"
+            />
+            <p class="text-sm text-gray-500">
+              Écrit par <strong>{{ comment.user.name }}</strong> le
+              {{ formatDateComment(comment.createdAt) }}
+            </p>
+          </div>
+          <p>{{ comment.message }}</p>
         </div>
       </div>
     </div>

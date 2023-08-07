@@ -7,3 +7,7 @@ export function getMovies() {
 export function getMovie(id) {
   return $fetch(`http://localhost:3000/movies/${id}?_expand=genre&_expand=actors`)
 }
+
+export function getComments(id) {
+  return $fetch(`http://localhost:3000/movies/${id}/comments?_expand=user`)
+}
