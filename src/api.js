@@ -11,3 +11,10 @@ export function getMovie(id) {
 export function getComments(id) {
   return $fetch(`http://localhost:3000/movies/${id}/comments?_expand=user`)
 }
+
+export function postComment(id, message) {
+  return $fetch(`http://localhost:3000/movies/${id}/comments`, {
+    method: 'POST',
+    body: { message, userId: 1 }
+  })
+}

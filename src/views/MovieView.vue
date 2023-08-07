@@ -1,6 +1,7 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { getMovie, getComments } from '../api'
+import { getMovie, getComments, postComment } from '../api'
+import Button from '../components/Button.vue'
 import Modal from '../components/Modal.vue'
 import { computed, onMounted, ref } from 'vue'
 import ColorThief from 'colorthief'
@@ -8,6 +9,17 @@ import ColorThief from 'colorthief'
 const route = useRoute()
 const movie = ref({})
 const comments = ref([])
+const newComment = ref({ message: '' })
+
+const send = async (event) => {
+  event.preventDefault()
+
+  await postComment(movie.value.id, newComment.value.message)
+  comments.value = await getComments(movie.value.id)
+
+  newComment.value.message = ''
+}
+
 const color = ref([0, 0, 0])
 const showModal = ref(false)
 
@@ -150,6 +162,19 @@ onMounted(async () => {
 
   <div class="max-w-7xl mx-auto px-3 py-4">
     <h2 class="text-2xl font-bold my-4">Commentaires ({{ comments.length }})</h2>
+
+    <div class="w-6/12 mx-auto mb-6">
+      <h2 class="text-lg font-bold my-4">Ajouter un commentaire</h2>
+      <form>
+        <div>
+          <textarea
+            class="w-full border-gray-200 rounded-lg"
+            v-model="newComment.message"
+          ></textarea>
+        </div>
+        <Button :disabled="!newComment.message.trim()" @click="send">Envoyer</Button>
+      </form>
+    </div>
 
     <div class="bg-white rounded-lg shadow divide-y">
       <div
