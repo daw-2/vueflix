@@ -27,16 +27,19 @@ const getMoviesOrActors = async (pages = 2) => {
       const { genres, videos } = result
       const actorsMovie = result.credits.cast.slice(0, 5) // [{}, {}]
 
-      actorsMovie.forEach((actor) => {
+      actorsMovie.forEach(async (actor) => {
         let existing = actors.find(a => a.id === actor.id)
 
         if (existing) {
           existing.moviesId.push(movie.id)
         } else {
+          const result = await $fetch(`${baseUrl}/person/${actor.id}?api_key=${process.env.MOVIE_DB_API_KEY}&language=fr-FR`)
+
           actors.push({
             ...actor,
-            profile_path: `https://image.tmdb.org/t/p/w500${actor.profile_path}`,
-            // slug: slugify(actor.name, { lower: true }),
+            ...(delete result.also_known_as && result),
+            profile_path: result.profile_path ? `https://image.tmdb.org/t/p/w500${result.profile_path}` : null,
+            // slug: slugify(result.name, { lower: true }),
             moviesId: [movie.id]
           })
         }

@@ -6,9 +6,12 @@ import ColorThief from 'colorthief'
 
 const route = useRoute()
 const movie = ref({})
-const color = ref(null)
+const color = ref([0, 0, 0])
 
-const year = computed(() => (date) => new Date().getFullYear())
+const year = computed(() => (date) => new Date(date).getFullYear())
+const age = computed(
+  () => (date) => new Date(Date.now() - new Date(date).getTime()).getUTCFullYear() - 1970
+)
 const loadColor = () => {
   const img = new Image()
   img.crossOrigin = 'anonymous'
@@ -27,6 +30,7 @@ const duration = computed(() => (runtime) => {
 
   return `${hours}h${minutes < 10 ? 0 : ''}${minutes}`
 })
+const note = computed(() => (note) => Math.ceil((note * 100) / 10))
 
 onMounted(async () => {
   movie.value = await getMovie(route.params.id)
@@ -37,26 +41,93 @@ onMounted(async () => {
 
 <template>
   <div class="bg-cover bg-center" :style="{ backgroundImage: `url(${movie.backdrop_path})` }">
-    <div class="py-6" :style="{ backgroundColor: `rgba(${color}, 0.5)` }">
+    <div class="py-6" :style="{ backgroundColor: `rgba(${color}, 0.75)` }">
       <div class="max-w-7xl mx-auto px-3 py-4">
         <div class="flex gap-8">
-          <div>
+          <div class="min-w-fit">
             <img
               :src="movie.poster_path"
               :alt="movie.title"
               class="rounded-lg h-[400px] object-cover"
             />
           </div>
-          <div class="text-white">
-            <h1 class="text-4xl text-center font-bold">
+          <div class="text-white flex flex-col justify-center">
+            <h1 class="text-4xl font-bold">
               {{ movie.title }}
-              <span class="text-gray-100 font-normal">({{ year(movie.release_date) }})</span>
+              <span class="text-gray-100 font-light">({{ year(movie.release_date) }})</span>
             </h1>
-            <p>
+            <p class="mb-4">
               {{ formatDate(movie.release_date) }} - {{ movie.genre?.name }} -
               {{ duration(movie.runtime) }}
             </p>
+            <div class="flex gap-6 mb-4">
+              <div
+                class="bg-black w-12 h-12 rounded-full border-2"
+                :class="{
+                  'border-green-500': note(movie.vote_average) >= 70,
+                  'border-yellow-500':
+                    note(movie.vote_average) >= 40 && note(movie.vote_average) < 70,
+                  'border-red-500': note(movie.vote_average) < 40
+                }"
+              >
+                <span class="text-white flex items-center h-full justify-center font-bold"
+                  >{{ note(movie.vote_average) }}%</span
+                >
+              </div>
+              <button class="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-12 h-12"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
+                  />
+                </svg>
+
+                <span>Voir la bande annonce</span>
+              </button>
+            </div>
+            <div>
+              <p class="italic">{{ movie.tagline }}</p>
+              <h3 class="my-3 text-xl font-bold">Synopsis</h3>
+              <p>{{ movie.overview }}</p>
+            </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-3 py-4">
+    <h2 class="text-2xl font-bold my-4">Casting</h2>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      <div
+        v-for="actor in movie?.actors
+          ?.filter((actor) => actor.profile_path)
+          .sort((actorA, actorB) => (actorA.order > actorB.order ? 1 : -1))"
+        :key="actor.id"
+        class="bg-white rounded-lg shadow"
+      >
+        <img
+          :src="actor.profile_path"
+          :alt="actor.name"
+          class="rounded-t-lg h-[250px] w-full object-cover"
+        />
+        <div class="p-3">
+          <h2 class="font-bold">{{ actor.name }} ({{ age(actor.birthday) }} ans)</h2>
+          <p class="text-gray-400">{{ actor.character }}</p>
         </div>
       </div>
     </div>
