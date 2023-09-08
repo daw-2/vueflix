@@ -4,6 +4,8 @@ const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
 const auth = require('json-server-auth')
 
+app.db = router.db
+
 router.db._.mixin({
   getById(collection, id) {
     if (! id) return
