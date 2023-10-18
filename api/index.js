@@ -38,6 +38,6 @@ app.use(middlewares).use(auth).use(jsonServer.bodyParser).use((req, res, next) =
   next()
 }).use(router)
 
-app.listen(3000, () => {
-  console.log('Serveur démarré (http://localhost:3000/) !')
+app.listen(3001, () => {
+  console.log('Serveur démarré (http://localhost:3001/) !')
 })
