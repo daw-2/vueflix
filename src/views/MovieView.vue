@@ -4,7 +4,7 @@ import { getMovie, getComments, postComment } from '../api'
 import Button from '../components/Button.vue'
 import Modal from '../components/Modal.vue'
 import { computed, onMounted, ref } from 'vue'
-import ColorThief from 'colorthief'
+import { getColorSync } from 'colorthief'
 
 const route = useRoute()
 const movie = ref({})
@@ -33,7 +33,7 @@ const loadColor = () => {
   img.src = movie.value.backdrop_path
 
   img.addEventListener('load', () => {
-    color.value = new ColorThief().getColor(img)
+    color.value = getColorSync(img).array()
   })
 }
 
