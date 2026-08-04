@@ -33,7 +33,11 @@ const loadColor = () => {
   img.src = movie.value.backdrop_path
 
   img.addEventListener('load', () => {
-    color.value = getColorSync(img).array()
+    const dominant = getColorSync(img)
+
+    if (dominant) {
+      color.value = dominant.array()
+    }
   })
 }
 
@@ -89,7 +93,7 @@ onMounted(async () => {
             </p>
             <div class="flex gap-6 mb-4">
               <div
-                class="bg-black w-12 h-12 rounded-full border-2"
+                class="bg-black w-12 h-12 rounded-full border-2 border-gray-200"
                 :class="{
                   'border-green-500': note(movie.vote_average) >= 70,
                   'border-yellow-500':
@@ -145,12 +149,12 @@ onMounted(async () => {
           ?.filter((actor) => actor.profile_path)
           .sort((actorA, actorB) => (actorA.order > actorB.order ? 1 : -1))"
         :key="actor.id"
-        class="bg-white rounded-lg shadow"
+        class="bg-white rounded-lg shadow-sm"
       >
         <img
           :src="actor.profile_path"
           :alt="actor.name"
-          class="rounded-t-lg h-[250px] w-full object-cover"
+          class="rounded-t-lg h-62.5 w-full object-cover"
         />
         <div class="p-3">
           <h2 class="font-bold">{{ actor.name }} ({{ age(actor.birthday) }} ans)</h2>
@@ -176,7 +180,7 @@ onMounted(async () => {
       </form>
     </div>
 
-    <div class="bg-white rounded-lg shadow divide-y">
+    <div class="bg-white rounded-lg shadow-sm divide-y divide-gray-200">
       <div
         v-for="comment in comments.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))"
         :key="comment.id"

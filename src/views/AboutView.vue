@@ -46,7 +46,7 @@ const showBiography = (user) => {
     <h1 class="text-4xl text-center font-bold my-12">A propos</h1>
 
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-for="user in team" :key="user.id" class="bg-white p-4 rounded-lg shadow">
+      <div v-for="user in team" :key="user.id" class="bg-white p-4 rounded-lg shadow-sm">
         <div class="grid grid-cols-2 items-center">
           <div>
             <img :src="user.avatar" :alt="user.name" class="rounded-full mx-auto w-32" />

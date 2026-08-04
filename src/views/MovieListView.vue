@@ -35,7 +35,7 @@ onMounted(async () => (movies.value = await getMovies()))
         <div
           v-for="movie in movies"
           :key="movie.id"
-          class="bg-white rounded-lg shadow flex flex-col"
+          class="bg-white rounded-lg shadow-sm flex flex-col"
         >
           <div class="relative">
             <RouterLink :to="`/films/${movie.id}-${slug(movie.title)}`">
@@ -46,7 +46,7 @@ onMounted(async () => (movies.value = await getMovies()))
               />
             </RouterLink>
             <div
-              class="absolute bottom-2 left-2 bg-black w-12 h-12 rounded-full border-2"
+              class="absolute bottom-2 left-2 bg-black w-12 h-12 rounded-full border-2 border-gray-200"
               :class="{
                 'border-green-500': note(movie.vote_average) >= 70,
                 'border-yellow-500':
@@ -59,7 +59,7 @@ onMounted(async () => (movies.value = await getMovies()))
               >
             </div>
           </div>
-          <div class="p-3 flex flex-col justify-between flex-grow">
+          <div class="p-3 flex flex-col justify-between grow">
             <h2 class="font-bold">
               <RouterLink :to="`/films/${movie.id}-${slug(movie.title)}`">{{
                 movie.title
@@ -79,7 +79,7 @@ onMounted(async () => (movies.value = await getMovies()))
       </div>
 
       <div v-if="store.total > 0" class="w-96">
-        <div class="sticky top-10 bg-white pt-4 pb-1 rounded-lg shadow px-2">
+        <div class="sticky top-10 bg-white pt-4 pb-1 rounded-lg shadow-sm px-2">
           <div v-for="item in store.cart" :key="item.movie.id">
             <div class="grid grid-cols-2 items-center mb-3 gap-2">
               <RouterLink :to="`/films/${item.movie.id}-${slug(item.movie.title)}`">
